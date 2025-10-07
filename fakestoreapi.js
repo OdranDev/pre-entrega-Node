@@ -10,7 +10,7 @@ async function getAllProducts() {
             precio: todos.price,
             catgoria: todos.category
         }))
-        console.log(todosLosProductos)
+        console.table(todosLosProductos)
         
     } catch (error) {
         console.error(`${error.message}`)
@@ -18,4 +18,24 @@ async function getAllProducts() {
         console.log(`Final`)
     }
 }
-export {getAllProducts}
+
+async function getOneProduct(searchID) {
+  try {
+    const response = await fetch(`${url}/${searchID}`, {method: "GET",});
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.table({
+      id: data.id,
+      title: data.title,
+      price: data.price,
+    });
+  } catch (error) {
+    console.error(`${error.message}`);
+  } finally {
+    console.log(`Fin`);
+  }
+}
+export {getAllProducts, getOneProduct}
