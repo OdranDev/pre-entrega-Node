@@ -1,0 +1,1 @@
+// Aqui vamos a crear las funciones que vamos a exportar con node modules para usar desde el index.js
