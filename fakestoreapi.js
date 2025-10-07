@@ -5,7 +5,13 @@ async function getAllProducts() {
         const response = await fetch(url, {method: "GET"})
         if(!response.ok){ throw new Error(`HTTP status: ${response.status}`) }
         const data = await response.json()
-        console.log(data)
+        const todosLosProductos = data.map((todos) => ({
+            titulo: todos.title,
+            precio: todos.price,
+            catgoria: todos.category
+        }))
+        console.log(todosLosProductos)
+        
     } catch (error) {
         console.error(`${error.message}`)
     } finally {
