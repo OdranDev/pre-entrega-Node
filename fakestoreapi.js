@@ -64,4 +64,27 @@ async function postOneProduct(producto) {
     }    
 }
 
-export {getAllProducts, getOneProduct, postOneProduct}
+async function deleteOneProduct(id) {
+    try {
+        const response = await fetch(`${url}/${id}`,{
+            method: "DELETE",
+        })
+        if(!response.ok){
+            throw new Error(`HTTP Error: Status ${response.status}`)
+        }
+        const data = await response.json()
+        console.log(`Producto eliminado: \n`, {
+            id: data.id,
+            Titulo: data.title,
+            Precio: data.price,
+            Categoria: data.category,
+        })
+        
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        console.log(`Fin`)
+    }
+}
+
+export {getAllProducts, getOneProduct, postOneProduct, deleteOneProduct,}

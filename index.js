@@ -1,5 +1,5 @@
 // Aqui vamos a importar las funciones desde ./fakestoreapi.js
-import { getAllProducts, getOneProduct, postOneProduct } from "./fakestoreapi.js"
+import { deleteOneProduct, getAllProducts, getOneProduct, postOneProduct } from "./fakestoreapi.js"
 
 const [,, comando, ...args] = process.argv
 const comandoMinusculas = comando.toLowerCase();
@@ -32,7 +32,13 @@ async function main(){
             }
             console.log(`Creando nuevo producto...\n`)
             await postOneProduct(nuevoProducto)
+            break
 
+        case 'delete':
+            // Ingresar por consola -> npm start delete <id>  
+            console.log(`Eliminando producto con ID ${args[0]}`)
+            await deleteOneProduct(args[0])
+            break
         default:
             console.error(`Comando desconocido: "${comando}"`)
             break;
