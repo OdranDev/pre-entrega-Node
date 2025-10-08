@@ -6,6 +6,7 @@ async function getAllProducts() {
         if(!response.ok){ throw new Error(`HTTP status: ${response.status}`) }
         const data = await response.json()
         const todosLosProductos = data.map((todos) => ({
+            id: todos.id,
             titulo: todos.title,
             precio: todos.price,
             catgoria: todos.category
@@ -28,14 +29,39 @@ async function getOneProduct(searchID) {
     const data = await response.json();
     console.table({
       id: data.id,
-      title: data.title,
-      price: data.price,
+      Titulo: data.title,
+      Precio: data.price,
+      Categoria: data.category,
     });
   } catch (error) {
     console.error(`${error.message}`);
   } finally {
     console.log(`Fin`);
   }
+}
+
+async function deleteOneProduct(id) {
+    try {
+        const response = await fetch(`${url}/${id}`,{
+            method: "DELETE",
+        })
+        if(!response.ok){
+            throw new Error(`HTTP Error: Status ${response.status}`)
+        }
+        const data = await response.json()
+        console.log(`Producto eliminado: \n`)
+        console.table({
+            id: data.id,
+            Titulo: data.title,
+            Precio: data.price,
+            Categoria: data.category,
+        })
+        
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        console.log(`Fin`)
+    }
 }
 
 async function postOneProduct(producto) {
@@ -61,30 +87,6 @@ async function postOneProduct(producto) {
     } finally {
         console.log('Fin')
     }    
-}
-
-async function deleteOneProduct(id) {
-    try {
-        const response = await fetch(`${url}/${id}`,{
-            method: "DELETE",
-        })
-        if(!response.ok){
-            throw new Error(`HTTP Error: Status ${response.status}`)
-        }
-        const data = await response.json()
-        console.log(`Producto eliminado: \n`)
-        console.table({
-            id: data.id,
-            Titulo: data.title,
-            Precio: data.price,
-            Categoria: data.category,
-        })
-        
-    } catch (error) {
-        console.error(error.message)
-    } finally {
-        console.log(`Fin`)
-    }
 }
 
 export {getAllProducts, getOneProduct, postOneProduct, deleteOneProduct,}

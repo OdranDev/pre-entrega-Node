@@ -2,7 +2,16 @@
 import { deleteOneProduct, getAllProducts, getOneProduct, postOneProduct } from "./fakestoreapi.js"
 
 const [,, comando, ...args] = process.argv
+
 const comandoMinusculas = comando.toLowerCase();
+
+const comprobarID = !args[0] || isNaN(args[0]) || args[0]<0
+const mostrarError = 
+console.log(`Error:\n`,
+    "Debes proporcionar el ID del producto a eliminar\n",
+    "El ID debe ser un numero entero mayor a 0",
+)
+
 async function main(){
     switch (comandoMinusculas) {
         case "getall":
@@ -11,9 +20,8 @@ async function main(){
             await getAllProducts()
             break;
         case 'getone':
-            if (!args[0]) {
-                console.error('Error: Debes proporcionar un ID');
-                console.log('Uso: npm start getOne <id>');
+            if (comprobarID) {
+                mostrarError
             } else {
                 // ingresar por consola -> npm start getOne <id> 
                 console.log(`🔍 Obteniendo producto con ID ${args[0]}...\n`);
@@ -36,14 +44,15 @@ async function main(){
             break
 
         case 'delete':
-            if(!args[0]){
-                console.log(`Error: Debes proporcionar el ID del producto a eliminar`)
+            if(comprobarID){
+                mostrarError
             } else {
                 // Ingresar por consola -> npm start delete <id>  
                 console.log(`Eliminando producto con ID ${args[0]}`)
                 await deleteOneProduct(args[0])
             }
             break
+
         default:
             console.error(`Comando desconocido: "${comando}"`)
             break;
