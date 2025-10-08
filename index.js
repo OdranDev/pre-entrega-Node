@@ -1,12 +1,12 @@
 // Aqui vamos a importar las funciones desde ./fakestoreapi.js
-import { getAllProducts, getOneProduct } from "./fakestoreapi.js"
+import { getAllProducts, getOneProduct, postOneProduct } from "./fakestoreapi.js"
 
 const [,, comando, ...args] = process.argv
 const comandoMinusculas = comando.toLowerCase();
 async function main(){
     switch (comandoMinusculas) {
         case "getall":
-            // Hay que ingresar por consola -> npm start getall para mostrar todos los productos
+            // Ingresar por consola -> npm start getall para mostrar todos los productos
             console.log(`Obteniendo todos los productos...\n por favor espere un momento`)
             await getAllProducts()
             break;
@@ -20,6 +20,15 @@ async function main(){
             console.log(`🔍 Obteniendo producto con ID ${args[0]}...\n`);
             await getOneProduct(args[0]);
             break;
+        case 'post':
+            // Ingresar por consola -> npm start post "<título>" <precio> "<categoria>"
+            const nuevoProducto = {
+                title: args[0],
+                price: args[1],
+                category: args[2],
+            }
+            console.log(`Creando nuevo producto...\n`)
+            await postOneProduct(nuevoProducto)
 
         default:
             console.error(`Comando desconocido: "${comando}"`)

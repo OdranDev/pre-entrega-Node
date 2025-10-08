@@ -38,4 +38,29 @@ async function getOneProduct(searchID) {
     console.log(`Fin`);
   }
 }
-export {getAllProducts, getOneProduct}
+
+async function postOneProduct(producto) {
+    try {
+        const response = await fetch(url, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(producto)
+        })
+        if(!response.ok){
+            throw new Error(`HTTP ERROR, Status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log(({
+            id: data.id,
+            Titulo: data.title,
+            Precio: data.price,
+            Categoria: data.category
+        }))
+    } catch (error) {
+      console.error(error.message)  
+    } finally {
+        console.log('Fin')
+    }    
+}
+
+export {getAllProducts, getOneProduct, postOneProduct}
