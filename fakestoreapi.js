@@ -50,10 +50,11 @@ async function postOneProduct(producto) {
             throw new Error(`HTTP ERROR, Status: ${response.status}`)
         }
         const data = await response.json()
-        console.log(({
+        console.log(`Nuevo Producto creado con éxito:\n`)
+        console.table(({
             id: data.id,
             Titulo: data.title,
-            Precio: data.price,
+            Precio: +data.price.toFixed(2),
             Categoria: data.category
         }))
     } catch (error) {

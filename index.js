@@ -21,10 +21,13 @@ async function main(){
             await getOneProduct(args[0]);
             break;
         case 'post':
+            if(args.length < 3){
+                console.error(`Error: Debes proporcionar "<título>" <precio> "<categoria>" `)
+            }
             // Ingresar por consola -> npm start post "<título>" <precio> "<categoria>"
             const nuevoProducto = {
                 title: args[0],
-                price: args[1],
+                price: parseFloat(args[1]),
                 category: args[2],
             }
             console.log(`Creando nuevo producto...\n`)
