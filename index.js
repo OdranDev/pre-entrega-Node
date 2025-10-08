@@ -11,33 +11,38 @@ async function main(){
             await getAllProducts()
             break;
         case 'getone':
-            // ingresar por consola -> npm start getOne <id> 
             if (!args[0]) {
-            console.error('Error: Debes proporcionar un ID');
-            console.log('Uso: npm start getOne <id>');
-            return;
+                console.error('Error: Debes proporcionar un ID');
+                console.log('Uso: npm start getOne <id>');
+            } else {
+                // ingresar por consola -> npm start getOne <id> 
+                console.log(`🔍 Obteniendo producto con ID ${args[0]}...\n`);
+                await getOneProduct(args[0]);
             }
-            console.log(`🔍 Obteniendo producto con ID ${args[0]}...\n`);
-            await getOneProduct(args[0]);
             break;
         case 'post':
             if(args.length < 3){
                 console.error(`Error: Debes proporcionar "<título>" <precio> "<categoria>" `)
+            } else {
+                // Ingresar por consola -> npm start post "<título>" <precio> "<categoria>"
+                const nuevoProducto = {
+                    title: args[0],
+                    price: parseFloat(args[1]),
+                    category: args[2],
+                }
+                console.log(`Creando nuevo producto...\n`)
+                await postOneProduct(nuevoProducto)
             }
-            // Ingresar por consola -> npm start post "<título>" <precio> "<categoria>"
-            const nuevoProducto = {
-                title: args[0],
-                price: parseFloat(args[1]),
-                category: args[2],
-            }
-            console.log(`Creando nuevo producto...\n`)
-            await postOneProduct(nuevoProducto)
             break
 
         case 'delete':
-            // Ingresar por consola -> npm start delete <id>  
-            console.log(`Eliminando producto con ID ${args[0]}`)
-            await deleteOneProduct(args[0])
+            if(!args[0]){
+                console.log(`Error: Debes proporcionar el ID del producto a eliminar`)
+            } else {
+                // Ingresar por consola -> npm start delete <id>  
+                console.log(`Eliminando producto con ID ${args[0]}`)
+                await deleteOneProduct(args[0])
+            }
             break
         default:
             console.error(`Comando desconocido: "${comando}"`)

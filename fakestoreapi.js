@@ -25,7 +25,6 @@ async function getOneProduct(searchID) {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
     const data = await response.json();
     console.table({
       id: data.id,
@@ -73,7 +72,8 @@ async function deleteOneProduct(id) {
             throw new Error(`HTTP Error: Status ${response.status}`)
         }
         const data = await response.json()
-        console.log(`Producto eliminado: \n`, {
+        console.log(`Producto eliminado: \n`)
+        console.table({
             id: data.id,
             Titulo: data.title,
             Precio: data.price,
