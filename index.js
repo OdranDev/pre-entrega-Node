@@ -65,13 +65,24 @@ async function main() {
       }
       break;
     case "put":
-        const productoActualizado = {
-            title: args[1],
-            price: args[2],
-            category: args[3]
+        if (args.length < 4 || isNaN(args[2]) ){
+            console.error(`Error: Debes proporcionar todos los campos\n`, {
+                id: "Numero de ID del producto",
+                title: "Nombre o titulo del producto",
+                price: "Unicamente numerico",
+                Category: "Categoria a la que pertenece el producto",
+            })
+        } else {
+            // Ingresa -> npm start put <id> "<título>" <precio> "<categoría>"
+            const productoActualizado = {
+                title: args[1],
+                price: args[2],
+                category: args[3]
+            }
+            console.log(`Editando producto con ID ${args[0]}...\n`)
+            await putOneProduct(args[0], productoActualizado)
         }
-        console.log(`Editando producto con ID ${args[0]}...\n`)
-        await putOneProduct(args[0], productoActualizado)
+        break
 
     default:
       console.error(`Comando desconocido: "${comando}"`);

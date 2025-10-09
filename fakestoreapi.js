@@ -100,7 +100,7 @@ async function putOneProduct(id, producto) {
             throw new Error(response.status)
         }
         const data = await response.json()
-        console.log(({
+        console.table(({
             id: data.id,
             Titulo: data.title,
             Precio: +data.price,
