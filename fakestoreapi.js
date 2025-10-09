@@ -89,4 +89,26 @@ async function postOneProduct(producto) {
     }    
 }
 
-export {getAllProducts, getOneProduct, postOneProduct, deleteOneProduct,}
+async function putOneProduct(id, producto) {
+    try {
+        const response = await fetch(`${url}/${id}`,{
+            method: "PUT",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify(producto)
+        })
+        if(!response.ok){
+            throw new Error(response.status)
+        }
+        const data = await response.json()
+        console.log(({
+            id: data.id,
+            Titulo: data.title,
+            Precio: +data.price,
+            Categoria: data.category,
+        }))
+    } catch (error) {
+        console.error(error.message)
+    } finally {console.log(`Fin`)}
+}
+
+export { getAllProducts, getOneProduct, deleteOneProduct, postOneProduct, putOneProduct}
