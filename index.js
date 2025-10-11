@@ -3,6 +3,7 @@ import {
   deleteOneProduct,
   getAllProducts,
   getOneProduct,
+  patchOneProduct,
   postOneProduct,
   putOneProduct,
 } from "./fakestoreapi.js";
@@ -83,7 +84,16 @@ async function main() {
             await putOneProduct(args[0], productoActualizado)
         }
         break
+    case 'patch':
+        const id = args[0]
+        const campo = args[1]
+        const valor = args[2]
+        
+        const cambios = { [campo]: isNaN(valor) ? valor : +(valor)}
 
+        console.log(`Actualizando producto con ID ${id}, campo ${campo}...\n`)
+        await patchOneProduct(id, cambios)
+        break
     default:
       console.error(`Comando desconocido: "${comando}"`);
       break;

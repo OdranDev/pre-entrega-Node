@@ -111,4 +111,25 @@ async function putOneProduct(id, producto) {
     } finally {console.log(`Fin`)}
 }
 
-export { getAllProducts, getOneProduct, deleteOneProduct, postOneProduct, putOneProduct}
+async function patchOneProduct(id, cambios) {
+    try {
+        const response = await fetch(`${url}/${id}`,{
+            method: "PATCH",
+            headers: {"Content-type":"application/json"},
+            body: JSON.stringify(cambios)
+        })
+        if(!response.ok){
+            throw new Error(`HTTP Error! Status: ${response.status}`)
+        }
+        const data = await response.json()
+        // const productoOriginal = await response.json()
+        console.log(`Producto actualizado exitosamente: \n`)
+        console.table(data)
+        
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        console.log(`Fin`)
+    }
+}
+export { getAllProducts, getOneProduct, deleteOneProduct, postOneProduct, putOneProduct, patchOneProduct}
